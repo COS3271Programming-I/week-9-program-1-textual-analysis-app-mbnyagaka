@@ -1,0 +1,56 @@
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class TextualAnalysisApp {
+    public static void main(String[] args) throws IOException {
+        Scanner keyboard = new Scanner(System.in);
+
+        System.out.print("Enter the name of the text file: ");
+        String filename = keyboard.nextLine();
+
+        File file = new File(filename);
+        Scanner inputFile = new Scanner(file);
+
+        int letters = 0;
+        int spaces = 0;
+        int sentences = 0;
+
+        while (inputFile.hasNextLine()) {
+            String line = inputFile.nextLine();
+
+            for (int i = 0; i < line.length(); i++) {
+                char ch = line.charAt(i);
+
+                if (Character.isLetter(ch)) {
+                    letters++;
+                }
+
+                if (ch == ' ') {
+                    spaces++;
+                }
+
+                if (ch == '.' || ch == '!' || ch == '?') {
+                    sentences++;
+                }
+            }
+        }
+
+        int words = spaces + 1;
+
+        double avgLettersPerWord = (double) letters / words;
+        avgLettersPerWord = Math.round(avgLettersPerWord * 10.0) / 10.0;
+
+        double avgWordsPerSentence = (double) words / sentences;
+        avgWordsPerSentence = Math.round(avgWordsPerSentence * 10.0) / 10.0;
+
+        System.out.println("Number of letters: " + letters);
+        System.out.println("Number of words: " + words);
+        System.out.println("Number of sentences: " + sentences);
+        System.out.println("Average letters per word: " + avgLettersPerWord);
+        System.out.println("Average words per sentence: " + avgWordsPerSentence);
+
+        inputFile.close();
+        keyboard.close();
+    }
+}
